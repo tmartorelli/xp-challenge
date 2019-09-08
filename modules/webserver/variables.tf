@@ -134,17 +134,6 @@ variable "site_name" {
   type        = "string"
 }
 
-# variable "4xx_count_metric" {
-#   description = "The metric used to count 4xx request count"
-#   type = "string"
-#   default = "HTTPCode_ELB_4XX_Count"
-# }
-
-# variable "4xx_metric_threshold" {
-#   description = "The threshold used for 4xx request count"
-#   type = "string"
-#   default = "10"
-# }
 
 
 

@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "s3_bucket" {
   acl    = "private"
 
   provisioner "local-exec" {
-    command = "aws s3 cp /Users/tizianomartorelli/Desktop/file_s3/ s3://${var.bucket_name}/webserver_bucket/ --recursive"
+    command = "aws s3 cp ${var.path_s3_file} s3://${var.bucket_name}/webserver_bucket/ --recursive"
   }
 
   tags = {

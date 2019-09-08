@@ -17,7 +17,7 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu_utilization" {
   threshold           = "${var.scale_up_alarm_threshold}"
 
   dimensions = {
-    autoscaling_group_name = "${aws_autoscaling_group.ec2_asg.name}"
+    AutoScalingGroupName = "${aws_lb_target_group.lb_targetgroup.name}"
   }
   alarm_description = "This metric monitor joomla webserver high CPU utilization"
   alarm_actions     = ["${aws_autoscaling_policy.scale_up.arn}"]
@@ -43,7 +43,7 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu_utilization" {
   threshold           = "${var.scale_down_alarm_threshold}"
 
   dimensions = {
-    autoscaling_group_name = "${aws_autoscaling_group.ec2_asg.name}"
+    AutoScalingGroupName = "${aws_autoscaling_group.ec2_asg.name}"
   }
   alarm_description = "This metric monitor joomla webserver low CPU utilization"
   alarm_actions     = ["${aws_autoscaling_policy.scale_down.arn}"]

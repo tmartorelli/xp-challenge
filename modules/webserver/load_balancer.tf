@@ -68,26 +68,25 @@ resource "aws_lb_listener" "http_listener" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = "${aws_lb_target_group.lb_targetgroup.arn}"
-    type             = "forward"
+    type             = "redirect"
 
-    #     # redirect {
-    #     #   port        = "443"
-    #     #   protocol    = "HTTPS"
-    #     #   status_code = "HTTP_301"
-    #     # }
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 
-# resource "aws_lb_listener" "https_listener" {
-#   load_balancer_arn = "${aws_lb.loadbalancer.arn}"
-#   port = 443
-#   protocol = "HTTPS"
-#   ssl_policy = "ELBSecurityPolicy-2016-08"
+resource "aws_lb_listener" "https_listener" {
+  load_balancer_arn = "${aws_lb.loadbalancer.arn}"
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "${aws_acm_certificate.cert.arn}"
 
-
-#   default_action {
-#       target_group_arn = "${aws_lb_target_group.lb_targetgroup.arn}"
-#       type = "forward"
-#   }
-# }
+  default_action {
+    target_group_arn = "${aws_lb_target_group.lb_targetgroup.arn}"
+    type             = "forward"
+  }
+}
