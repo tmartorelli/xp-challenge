@@ -9,3 +9,8 @@ output "db_endpoint" {
 output "db_admin" {
   value = "${aws_rds_cluster.joomla.master_username}"
 }
+
+
+output "db_name" {
+  value = "${var.db_name}"
+}

@@ -1,6 +1,7 @@
 variable "db_name" {
   description = "The name for the DB istance"
   type        = "string"
+  default     = "joomla"
 }
 
 variable "vpc_id" {
@@ -10,19 +11,19 @@ variable "vpc_id" {
 
 variable "private_subnet_1" {
   description = "The subnet used for DB"
-  type = "string"
+  type        = "string"
 }
 
 variable "private_subnet_2" {
   description = "The subnet used for DB"
-  type = "string"
+  type        = "string"
 }
 
 
 
 variable "db_subnetgroup" {
   description = "The name of the subnet group used for the DB cluster"
-  type = "string"
+  type        = "string"
 }
 
 
@@ -44,13 +45,13 @@ variable "db_class" {
 }
 
 variable "region" {
-  type = "string"
+  type    = "string"
   default = "eu-west-1"
 }
 
 variable "public_sg" {
   description = "The ID of the application security group"
-  type = "string"
+  type        = "string"
 }
 
 

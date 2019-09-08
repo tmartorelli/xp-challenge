@@ -1,20 +1,20 @@
 resource "aws_rds_cluster_instance" "db_istances" {
-  count              = 2
-  identifier         = "aurora-joomla-${count.index}"
-  cluster_identifier = "${aws_rds_cluster.joomla.id}"
-  instance_class     = "${var.db_class}"
+  count                = 2
+  identifier           = "aurora-joomla-${count.index}"
+  cluster_identifier   = "${aws_rds_cluster.joomla.id}"
+  instance_class       = "${var.db_class}"
   db_subnet_group_name = "${var.db_subnetgroup}"
 }
 
 resource "aws_rds_cluster" "joomla" {
-  cluster_identifier = "aurora-cluster-joomla"
-  availability_zones = ["${var.region}a", "${var.region}b"]
-  database_name      = "${var.db_name}"
-  master_username    = "${var.db_admin}"
-  master_password    = "${var.db_passwd}"
-  db_subnet_group_name = "${var.db_subnetgroup}"
+  cluster_identifier     = "aurora-cluster-joomla"
+  availability_zones     = ["${var.region}a", "${var.region}b"]
+  database_name          = "${var.db_name}"
+  master_username        = "${var.db_admin}"
+  master_password        = "${var.db_passwd}"
+  db_subnet_group_name   = "${var.db_subnetgroup}"
   vpc_security_group_ids = ["${aws_security_group.private_sg.id}"]
-  skip_final_snapshot = true
+  skip_final_snapshot    = true
 }
 
 resource "aws_db_subnet_group" "private_db_subnet_group" {
