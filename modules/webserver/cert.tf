@@ -1,3 +1,5 @@
+#Create self-sign cert
+
 resource "tls_private_key" "ca_key" {
   algorithm = "RSA"
 }

@@ -1,3 +1,5 @@
+#Create HTTP 4xx request check
+
 resource "aws_cloudwatch_metric_alarm" "http_error_request" {
   alarm_name                = "4xx_request"
   comparison_operator       = "GreaterThanOrEqualToThreshold"

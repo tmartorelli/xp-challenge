@@ -1,3 +1,5 @@
+#Create application loadbalancer
+
 resource "aws_lb" "loadbalancer" {
   name            = "jml-alb"
   internal        = false
@@ -58,9 +60,11 @@ resource "aws_lb_target_group" "lb_targetgroup" {
     healthy_threshold   = "2"
     unhealthy_threshold = "5"
     timeout             = "28"
-    matcher             = "200" //fixed the unhealthy issue on console setting the success code to 302 instead of 200
+    matcher             = "200"
   }
 }
+
+#create http redirection to https
 
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = "${aws_lb.loadbalancer.arn}"
@@ -68,7 +72,7 @@ resource "aws_lb_listener" "http_listener" {
   protocol          = "HTTP"
 
   default_action {
-    type             = "redirect"
+    type = "redirect"
 
     redirect {
       port        = "443"
@@ -77,6 +81,8 @@ resource "aws_lb_listener" "http_listener" {
     }
   }
 }
+
+#create https listener using self-sign certificate
 
 resource "aws_lb_listener" "https_listener" {
   load_balancer_arn = "${aws_lb.loadbalancer.arn}"

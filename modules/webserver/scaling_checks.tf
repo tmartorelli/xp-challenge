@@ -1,3 +1,4 @@
+#creating autoscaling policy to spin up instances
 resource "aws_autoscaling_policy" "scale_up" {
   name                   = "autoscaling_up_ec2_instance"
   scaling_adjustment     = "${var.scaling_adjust_alarm}"
@@ -6,6 +7,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   autoscaling_group_name = "${aws_autoscaling_group.ec2_asg.name}"
 }
 
+#create CPU Utilization check (High)
 resource "aws_cloudwatch_metric_alarm" "high_cpu_utilization" {
   alarm_name          = "joomla_scale_up"
   comparison_operator = "GreaterThanOrEqualToThreshold"
@@ -23,6 +25,8 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu_utilization" {
   alarm_actions     = ["${aws_autoscaling_policy.scale_up.arn}"]
 }
 
+#creating autoscaling policy to scale down instances
+
 resource "aws_autoscaling_policy" "scale_down" {
   name                   = "autoscaling_down_ec2_instance"
   scaling_adjustment     = "${var.scaling_adjust_alarm}"
@@ -31,6 +35,7 @@ resource "aws_autoscaling_policy" "scale_down" {
   autoscaling_group_name = "${aws_autoscaling_group.ec2_asg.name}"
 }
 
+#create CPU Utilization check (Low)
 
 resource "aws_cloudwatch_metric_alarm" "low_cpu_utilization" {
   alarm_name          = "joomla_scale_down"

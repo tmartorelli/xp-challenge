@@ -6,6 +6,6 @@ variable "bucket_name" {
 
 variable "path_s3_file" {
   description = "The path of the files to upload in S3 bucket"
-  type = "string"
+  type        = "string"
 
 }

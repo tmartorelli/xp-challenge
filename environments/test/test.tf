@@ -11,8 +11,8 @@ module "vpc" {
 
 
 module "data" {
-  source      = "../../modules/data"
-  bucket_name = "xp-bucket-test"
+  source       = "../../modules/data"
+  bucket_name  = "xp-bucket-test"
   path_s3_file = "/Users/tizianomartorelli/Desktop/myWorks/git/xp-challenge/to_upload_s3"
 }
 

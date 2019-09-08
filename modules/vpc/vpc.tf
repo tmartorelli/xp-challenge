@@ -1,8 +1,10 @@
+#Create VPC
 resource "aws_vpc" "default" {
   cidr_block       = "192.168.0.0/19"
   instance_tenancy = "default"
 }
 
+# create IGW to allow traffic for the public subnet
 resource "aws_internet_gateway" "gateway" {
   vpc_id = "${aws_vpc.default.id}"
   tags = {
@@ -58,6 +60,7 @@ resource "aws_subnet" "private_subnet_2" {
   cidr_block        = "192.168.10.0/23"
 }
 
+# create a NAT gateway for the private subnets
 resource "aws_nat_gateway" "ngw_1" {
   allocation_id = "${aws_eip.nat_ip_1.id}"
   subnet_id     = "${aws_subnet.public_subnet_1.id}"
@@ -78,6 +81,9 @@ resource "aws_route_table" "vpc_route" {
   }
 }
 
+
+# create the route table entry to use the IGW as default route
+
 resource "aws_route_table" "dmz_route_table" {
   vpc_id = "${aws_vpc.default.id}"
 
@@ -97,7 +103,7 @@ resource "aws_route_table_association" "dmz_route_association_2" {
   route_table_id = "${aws_route_table.dmz_route_table.id}"
 }
 
-
+# create the route table entry to use the IGW as default route
 resource "aws_route_table" "public_route_table" {
   vpc_id = "${aws_vpc.default.id}"
 
@@ -107,6 +113,8 @@ resource "aws_route_table" "public_route_table" {
 
   }
 }
+
+
 
 resource "aws_route_table_association" "public_route_association_1" {
   subnet_id      = "${aws_subnet.public_subnet_1.id}"
@@ -118,6 +126,8 @@ resource "aws_route_table_association" "public_route_association_2" {
   route_table_id = "${aws_route_table.public_route_table.id}"
 }
 
+
+#create a route to allow private instances to reach the internet via the NAT GW
 resource "aws_route_table" "private_route_table_1" {
   vpc_id = "${aws_vpc.default.id}"
 

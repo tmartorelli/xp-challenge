@@ -1,3 +1,4 @@
+# S3 bucket
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "${var.bucket_name}"
   acl    = "private"
@@ -12,7 +13,7 @@ resource "aws_s3_bucket" "s3_bucket" {
   }
 }
 
-
+# policy document to allow full access to s3 bucket
 data "aws_iam_policy_document" "s3_full_access" {
   statement {
     actions = [
@@ -25,7 +26,7 @@ data "aws_iam_policy_document" "s3_full_access" {
     ]
   }
 }
-
+# policy to allow full access
 resource "aws_iam_policy" "s3_full_access" {
   name   = "s3_read_access"
   path   = "/"
