@@ -1,5 +1,12 @@
 data "template_file" "userdata_webserver" {
   template = "${file("${path.module}/ec2_template/userdata.sh")}"
+
+#Define variables for dynamic DB credential configuration (configuration.php)
+  vars = {
+    db_endpoint = "${var.db_endpoint}"
+    db_admin = "${var.db_admin}"
+    db_passwd = "${var.db_passwd}"
+  }
 }
 
 
@@ -7,6 +14,8 @@ resource "aws_iam_instance_profile" "instance" {
   name = "instance_launcher"
   role = "${aws_iam_role.instance.name}"
 }
+
+
 
 resource "aws_launch_configuration" "ec2_webserver" {
   name = "ec2_webserver"

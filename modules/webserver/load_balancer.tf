@@ -4,8 +4,7 @@ resource "aws_lb" "loadbalancer" {
   security_groups = ["${aws_security_group.external_sg.id}"]
   subnets = ["${var.dmz_subnet_1}", "${var.dmz_subnet_2}"]
 
-  enable_deletion_protection = true
-
+   enable_deletion_protection = false
 
   tags = {
       Name = "Application Load Balancer"
@@ -63,26 +62,27 @@ resource "aws_lb_listener" "http_listener" {
   port = 80
   protocol = "HTTP"
 
-  default_action {
-      type = "redirect"
+   default_action {
+       target_group_arn = "${aws_lb_target_group.lb_targetgroup.arn}"
+       type = "forward"
 
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-  }
+#     # redirect {
+#     #   port        = "443"
+#     #   protocol    = "HTTPS"
+#     #   status_code = "HTTP_301"
+#     # }
+   }
+}
 
-resource "aws_lb_listener" "https_listener" {
-  load_balancer_arn = "${aws_lb.loadbalancer.arn}"
-  port = 443
-  protocol = "HTTPS"
-  ssl_policy = "ELBSecurityPolicy-2016-08"
+# resource "aws_lb_listener" "https_listener" {
+#   load_balancer_arn = "${aws_lb.loadbalancer.arn}"
+#   port = 443
+#   protocol = "HTTPS"
+#   ssl_policy = "ELBSecurityPolicy-2016-08"
   
 
-  default_action {
-      target_group_arn = "${aws_lb_target_group.lb_targetgroup.arn}"
-      type = "forward"
-  }
-}
+#   default_action {
+#       target_group_arn = "${aws_lb_target_group.lb_targetgroup.arn}"
+#       type = "forward"
+#   }
+# }

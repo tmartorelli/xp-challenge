@@ -101,4 +101,21 @@ variable "key_pair" {
   type = "string"
 }
 
+variable "db_endpoint" {
+  description = "The DB DNS endpoint "
+  type = "string"
+}
+
+
+variable "db_admin" {
+  description = "Administrator username for the database"
+  type = "string"
+}
+
+
+variable "db_passwd" {
+  description = "The password used for the DB administrator user"
+  type = "string"
+}
+
 

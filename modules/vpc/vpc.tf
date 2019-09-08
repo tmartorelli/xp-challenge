@@ -24,12 +24,14 @@ resource "aws_subnet" "public_subnet_1" {
   vpc_id            = "${aws_vpc.default.id}"
   availability_zone = "${var.region}a"
   cidr_block        = "192.168.4.0/23"
+  map_public_ip_on_launch = true
 }
 
 resource "aws_subnet" "public_subnet_2" {
   vpc_id            = "${aws_vpc.default.id}"
   availability_zone = "${var.region}b"
   cidr_block        = "192.168.6.0/23"
+  map_public_ip_on_launch = true
 }
 
 resource "aws_subnet" "dmz_subnet_1" {

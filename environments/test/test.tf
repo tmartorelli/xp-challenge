@@ -9,9 +9,15 @@ module "vpc" {
   environment = "test"
 }
 
+
 module "data" {
   source      = "../../modules/data"
   bucket_name = "xp-bucket-test"
+}
+
+variable "db_passwd" {
+  description = "The password used for DB administrator user"
+  type = "string"
 }
 
 
@@ -21,7 +27,7 @@ module "database" {
   vpc_id = "${module.vpc.vpc_id}"
   db_name   = "joomla"
   db_admin  = "admin"
-  db_passwd = "adminadmin"
+  db_passwd = "${var.db_passwd}"
   db_subnetgroup = "db_private_subnet_group"
   private_subnet_1 = "${module.vpc.private_subnet_1}"
   private_subnet_2 = "${module.vpc.private_subnet_2}"
@@ -38,6 +44,10 @@ module "database" {
    public_subnet_2 = "${module.vpc.public_subnet_2}"
    dmz_subnet_1 = "${module.vpc.dmz_subnet_1}"
    dmz_subnet_2 = "${module.vpc.dmz_subnet_2}"
-   key_pair = "jml-ec2-kp"
+   key_pair = "macbook"
+   max_instances = "4"
+   db_endpoint = "${module.database.db_endpoint}"
+   db_admin = "${module.database.db_admin}"
+   db_passwd = "${var.db_passwd}"
  }
 

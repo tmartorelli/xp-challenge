@@ -2,6 +2,10 @@ resource "aws_s3_bucket" "s3_bucket" {
   bucket = "${var.bucket_name}"
   acl    = "private"
 
+  provisioner "local-exec" {
+     command = "aws s3 cp /Users/tizianomartorelli/Desktop/file_s3/ s3://${var.bucket_name}/webserver_bucket/ --recursive" 
+  }
+
   tags = {
     Name        = "Mybucket"
     Environment = "Production"
